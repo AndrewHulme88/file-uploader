@@ -1,7 +1,7 @@
 require("dotenv").config();
 const express = require("express");
-const expressSession = require("express-session");
-const { PrismaSessionStore } = require("@quixo3/prisma-session-store");
+const session = require("express-session");
+const { PrismaSessionStore } = require("@quixo3/prisma-session-store")(session);
 const { PrismaClient } = require("@prisma/client");
 const passport = require("passport");
 const multer = require('multer');
@@ -9,6 +9,8 @@ const path = require('path');
 const LocalStrategy = require('passport-local').Strategy;
 const bcrypt = require('bcryptjs');
 const PORT = process.env.PORT || 3000;
+const authRoutes = require('./routes/authRoutes');
+const uploadRoutes = require('./routes/uploadRoutes');
 
 const app = express();
 const prisma = new PrismaClient();
@@ -45,5 +47,8 @@ passport.deserializeUser(async (id, done) => {
 
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.use('/', authRoutes);
+app.use('/', uploadRoutes);
 
 app.listen(PORT, () => console.log("App listening on port 3000"));
