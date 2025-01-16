@@ -14,7 +14,8 @@ model User {
 }
 
 model Session {
-  sid       String   @id @default(cuid())
+  id        String   @id
+  sid       String   @unique
   data      String
   expiresAt DateTime
 }
