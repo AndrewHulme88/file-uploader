@@ -8,8 +8,8 @@ const upload = multer({ dest: path.join(__dirname, '../uploads/') });
 
 router.get('/upload', uploadController.uploadForm);
 
-router.post('/upload', upload.single('file'), (req, res) => {
-  if (!req.isAuthenticated()) return res.redirect('/login');
+router.post('/upload', upload.single('file'), (req, res, next) => {
+  // if (!req.isAuthenticated()) return res.redirect('/login');
   res.send(`File uploaded: ${req.file.filename}`);
 });
 
