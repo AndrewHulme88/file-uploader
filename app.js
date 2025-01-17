@@ -11,6 +11,7 @@ const bcrypt = require('bcryptjs');
 const PORT = process.env.PORT || 3000;
 const authRoutes = require('./routes/authRoutes');
 const uploadRoutes = require('./routes/uploadRoutes');
+const folderRoutes = require("./routes/folderRoutes");
 
 const app = express();
 const prisma = new PrismaClient();
@@ -65,5 +66,6 @@ app.use(passport.session());
 
 app.use('/', authRoutes);
 app.use('/', uploadRoutes);
+app.use("/folders", folderRoutes);
 
 app.listen(PORT, () => console.log("App listening on port 3000"));
